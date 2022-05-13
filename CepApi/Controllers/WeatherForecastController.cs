@@ -34,13 +34,15 @@ namespace CepApi.Controllers
 
             RestClient client = new RestClient( string.Format ( $"https://viacep.com.br/ws/{cep}/json/"));
             RestRequest request = new RestRequest("", Method.Get);
-            var Response = client.ExecuteGetAsync(request);
+            var Response = client.ExecuteGetAsync<endereco>(request);
+
+            endereco a = new endereco();
 
 
 
-
-            return ;
-
+            a = Response.Result.Data;
+            return a ;
+            
 
 
 
