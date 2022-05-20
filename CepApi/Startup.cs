@@ -1,6 +1,8 @@
+using CepApi.Controllers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -26,6 +28,7 @@ namespace CepApi
         public void ConfigureServices(IServiceCollection services)
         {
 
+           services.AddDbContext<DbNameContex>(opt => opt.UseInMemoryDatabase("teste"));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

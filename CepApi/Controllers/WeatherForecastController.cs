@@ -19,29 +19,36 @@ namespace CepApi.Controllers
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
-
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        private DbNameContex _contex;
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, DbNameContex contex)
         {
             _logger = logger;
-
+            _contex = contex;
         }
 
 
 
         [HttpGet]
-        public endereco Get(string cep)
+        public endereco Get(string cep )
         {
 
             RestClient client = new RestClient( string.Format ( $"https://viacep.com.br/ws/{cep}/json/"));
             RestRequest request = new RestRequest("", Method.Get);
             var Response = client.ExecuteGetAsync<endereco>(request);
 
-            endereco a = new endereco();
+            endereco endereco = new endereco();
 
+            
 
+            endereco = Response.Result.Data;
 
-            a = Response.Result.Data;
-            return a ;
+            //endereco.Ddd
+            // f => 
+
+            var Freteeddd = _contex.freteDdds.Where(f => f.Ddd == endereco.Ddd).FirstOrDefault();
+            
+            endereco.Frete = Freteeddd.ValorDoFrete;
+            return endereco ;
             
 
 
